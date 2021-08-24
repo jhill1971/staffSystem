@@ -1,0 +1,82 @@
+import java.util.*
+
+// 24 August 2021 Classwork
+// James Hill
+
+open class Employee(open val id: String, open val name: String, open var age: Int, open val email: String) {
+    companion object {
+        open val listOfEmployees = mutableListOf<Employee>()
+        open fun staff (listOfEmployees: MutableList<Employee>) {
+            for (e in listOfEmployees) {
+                println("ID: " + e.id + "  name: " + e.name + "  Age: " + e.age + "  email: " + e.email)
+            }
+        }
+    }
+}
+
+
+class Cashier(override val id: String, override val name: String, override var age: Int, override val email: String) :
+    Employee(id, name, age, email) {
+    val dateToSales = mutableMapOf<String, Int>()
+
+}
+
+class Manager(override val id: String, override val name: String, override var age: Int, override val email: String) :
+    Employee(id, name, age, email) {
+    open val resumesToReview = mutableListOf<Person>()
+    fun displayList(resumesToReview: MutableList<Person>) {
+        for (p in resumesToReview) {
+            println("name: " + p.name + " ID: " + p.id + " resume: " + p.resume)
+        }
+    }
+}
+
+
+class Person(val id: String, val name: String, val resume: String) {
+
+}
+
+
+fun main(args: Array<String>) {
+    val cashier1 = Cashier(id = "cash1", name = "Sarah", age = 18, email = "email1@mail")
+    Employee.listOfEmployees.add(cashier1)
+    cashier1.dateToSales["August 23"] = 2300
+    println("Cashier 1 Sales: ")
+    println(cashier1.dateToSales)
+
+    val cashier2 = Cashier(id = "cash2", name = "Bob", age = 20, email = "email2@mail")
+    Employee.listOfEmployees.add(cashier2)
+    cashier2.dateToSales["August 23"] = 1400
+    println("Cashier 2 Sales: ")
+    println(cashier2.dateToSales)
+
+    val cashier3 = Cashier(id = "cash3", name = "Mary", age = 30, email = "email3@mail")
+    Employee.listOfEmployees.add(cashier3)
+    cashier3.dateToSales["August 24"] = 2000
+    println("Cashier 3 Sales: ")
+    println(cashier3.dateToSales)
+
+    val cashier4 = Cashier(id = "cash4", name = "Eustace", age = 22, email = "email4@mail")
+    Employee.listOfEmployees.add(cashier4)
+    println("Cashier 4 Sales: ")
+    cashier4.dateToSales["August 24"] = 1500
+
+    val person1 = Person(id = "TX100", name = "Billy Bob", resume = "BillyBob2021.pdf")
+    val person2 = Person(id = "IO200", name = "Emma", resume = "emmaTResume.pdf")
+    val person3 = Person(id = "PA300", name = "Connie", resume = "conniesResume.pdf")
+
+
+    val manager1 = Manager(id = "Man001", name = "John", age = 50, email = "man01@email")
+    Employee.listOfEmployees.add(manager1)
+    manager1.resumesToReview.add(person1)
+    manager1.resumesToReview.add(person2)
+    manager1.resumesToReview.add(person3)
+    println()
+    println("List of employees: ")
+    Employee.staff(Employee.listOfEmployees)
+    println()
+    println("Resumes to review: ")
+    manager1.displayList(manager1.resumesToReview)
+
+
+}
